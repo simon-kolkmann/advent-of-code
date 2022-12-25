@@ -8,17 +8,18 @@ const input = fs.readFileSync(path.join(__dirname(import.meta), './input.txt'), 
 const lines = input.split(EOL)
 const calories = []
 
-let tmp = 0
+let currentCalories = 0
+
 lines.forEach((line, index, array) => {
 	if (line === '') {
 		return
 	}
 
-	tmp = tmp + Number(line)
+	currentCalories += Number(line)
 
 	if (array[index + 1] === '') {
-		calories.push(tmp)
-		tmp = 0
+		calories.push(currentCalories)
+		currentCalories = 0
 	}
 })
 
