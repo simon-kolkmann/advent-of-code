@@ -9,22 +9,23 @@ const lines = input.split(EOL)
 
 const divider = lines.indexOf('')
 
-const matrix = []
+const initialStateMatrix = []
 const moves = []
 
-for (let line = 0; line < lines.length - 1; line++) {
-	if (line === divider) {
-		continue
+lines.forEach((line, index) => {
+	// Ignore divider & final newline
+	if (!line.length > 0) {
+		return
 	}
 
-	if (line < divider) {
-		matrix.push(lines[line])
+	if (index < divider) {
+		initialStateMatrix.push(line)
 	} else {
-		moves.push(lines[line])
+		moves.push(line)
 	}
-}
+})
 
-const numbers = matrix[matrix.length - 1]
+const numbers = initialStateMatrix[initialStateMatrix.length - 1]
 
 const stacks = {}
 
@@ -38,20 +39,19 @@ for (let index = 0; index < numbers.length; index++) {
 
 for (const [a, b] of Object.entries(stacks)) {
 	stacks[a] = []
-	matrix.forEach(line => {
+	initialStateMatrix.forEach(line => {
 		if (line[b] !== ' ') {
 			stacks[a].unshift(line[b])
 		}
 	})
 }
 
-for (const line of lines) {
+for (const move of moves) {
 	// eslint-disable-next-line prefer-const
-	let [count, source, dest] = line.replace('move ', '').replace('from ', '').replace('to ', '').split(' ')
+	let [[count], [source], [dest]] = move.matchAll(/(\d+)/g)
 
 	while (count > 0) {
-		const element = stacks[source].pop()
-		stacks[dest].push(element)
+		stacks[dest].push(stacks[source].pop())
 		count--
 	}
 }
