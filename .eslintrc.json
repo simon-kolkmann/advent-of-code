@@ -1,0 +1,107 @@
+{
+	"plugins": [
+		"import",
+		"prettier"
+	],
+	"extends": [
+		"eslint:recommended"
+	],
+	"rules": {
+		"curly": [
+			"error"
+		],
+		"eqeqeq": [
+			"error"
+		],
+		"prettier/prettier": "error",
+		"import/newline-after-import": [
+			"error"
+		],
+		"import/order": [
+			"error",
+			{
+				"alphabetize": {
+					"order": "asc",
+					"caseInsensitive": true
+				},
+				"groups": [
+					[
+						"builtin",
+						"external"
+					],
+					"sibling",
+					"parent",
+					"index"
+				],
+				"newlines-between": "always"
+			}
+		],
+		"import/extensions": [
+			"error",
+			{
+				"js": "always"
+			}
+		],
+		"import/no-commonjs": "error",
+		"lines-between-class-members": [
+			"error",
+			"always"
+		],
+		"no-const-assign": "error",
+		"no-eval": "error",
+		"no-mixed-spaces-and-tabs": [
+			"error",
+			"smart-tabs"
+		],
+		"no-process-env": "error",
+		"no-this-before-super": "error",
+		"no-throw-literal": "error",
+		"no-unused-vars": [
+			"error",
+			{
+				"argsIgnorePattern": "next|request|h"
+			}
+		],
+		"no-useless-return": "error",
+		"no-var": "error",
+		"one-var": [
+			"error",
+			"never"
+		],
+		"padding-line-between-statements": [
+			"error",
+			{
+				"blankLine": "always",
+				"prev": "*",
+				"next": "function"
+			},
+			{
+				"blankLine": "always",
+				"prev": "case",
+				"next": "*"
+			},
+			{
+				"blankLine": "always",
+				"prev": "block-like",
+				"next": "*"
+			}
+		],
+		"prefer-const": "error",
+		"prefer-template": "error",
+		"space-infix-ops": [
+			"error"
+		],
+		"strict": [
+			"error",
+			"never"
+		]
+	},
+	"env": {
+		"es6": true,
+		"node": true
+	},
+	"parserOptions": {
+		"ecmaVersion": 2022,
+		"sourceType": "module"
+	}
+}
