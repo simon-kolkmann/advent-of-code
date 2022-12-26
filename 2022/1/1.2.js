@@ -1,11 +1,6 @@
-import fs from 'fs'
-import { EOL } from 'os'
-import path from 'path'
+import { getPuzzleInput } from '#root/util/index.js'
 
-import { __dirname } from '#root/util/index.js'
-
-const input = fs.readFileSync(path.join(__dirname(import.meta), './input.txt'), 'utf-8')
-const lines = input.split(EOL)
+const lines = getPuzzleInput(import.meta)
 const calories = []
 
 let currentCalories = 0
