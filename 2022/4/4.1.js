@@ -1,12 +1,31 @@
 import { getPuzzleInput } from '#root/util/index.js'
 
-const assignments = ['2-4,6-8', '2-3,4-5', '5-7,7-9', '2-8,3-7', '6-6,4-6', '2-6,4-8']
+const assignments = getPuzzleInput(import.meta).filter(line => line !== '')
 
-for (const assignment of assignments) {
+class Range {
+	constructor(a, b) {
+		this.a = a
+		this.b = b
+	}
+
+	contains(range) {
+		return this.a <= range.a && this.b >= range.b
+	}
+}
+
+const count = assignments.reduce((count, assignment) => {
 	const [one, two] = assignment.split(',')
 
 	const [a, b] = one.split('-').map(Number)
 	const [c, d] = two.split('-').map(Number)
 
-	console.log(a, b, c, d)
-}
+	if (new Range(a, b).contains(new Range(c, d))) {
+		return count + 1
+	} else if (new Range(c, d).contains(new Range(a, b))) {
+		return count + 1
+	} else {
+		return count
+	}
+}, 0)
+
+console.log(count)
