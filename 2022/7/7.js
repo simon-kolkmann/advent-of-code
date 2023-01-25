@@ -90,14 +90,9 @@ for (const line of input) {
 }
 
 const solutionPartOne = findAllDirectories()
-	.map(path => {
-		return {
-			path,
-			size: calculateDirectorySize(path)
-		}
-	})
-	.filter(({ size }) => size <= 100000)
-	.reduce((total, { size }) => total + size, 0)
+	.map(path => calculateDirectorySize(path))
+	.filter(size => size <= 100000)
+	.reduce((total, size) => total + size, 0)
 
 console.log(`Solution of Part I: ${solutionPartOne}`)
 
