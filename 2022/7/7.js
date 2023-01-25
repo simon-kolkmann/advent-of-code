@@ -47,6 +47,24 @@ const calculateDirectorySize = pathToDirectory => {
 	}, 0)
 }
 
+const findDirectoriesIn = pathToDirectory => {
+	let result = []
+	const directory = getFileOrDirectory(pathToDirectory)
+
+	for (const [name, fileOrDirectory] of Object.entries(directory)) {
+		if (fileOrDirectory.type === 'd') {
+			const found = path.join(pathToDirectory, name)
+			result = [...result, found, ...findDirectoriesIn(found)]
+		}
+	}
+
+	return result
+}
+
+const findAllDirectories = () => {
+	return ['/', ...findDirectoriesIn('/')]
+}
+
 for (const line of input) {
 	if (line.startsWith('$ ')) {
 		const [cmd, arg] = line
@@ -71,21 +89,7 @@ for (const line of input) {
 	}
 }
 
-const findDirectoriesIn = pathToDirectory => {
-	let result = []
-	const directory = getFileOrDirectory(pathToDirectory)
-
-	for (const [name, fileOrDirectory] of Object.entries(directory)) {
-		if (fileOrDirectory.type === 'd') {
-			const found = path.join(pathToDirectory, name)
-			result = [...result, found, ...findDirectoriesIn(found)]
-		}
-	}
-
-	return result
-}
-
-const solutionPartOne = ['/', ...findDirectoriesIn('/')]
+const solutionPartOne = findAllDirectories()
 	.map(path => {
 		return {
 			path,
@@ -104,7 +108,7 @@ const used = calculateDirectorySize('/')
 const available = totalSpace - used
 const needed = 30000000 - available
 
-const solutionPartTwo = ['/', ...findDirectoriesIn('/')]
+const solutionPartTwo = findAllDirectories()
 	.map(path => calculateDirectorySize(path))
 	.filter(size => size >= needed)
 	.sort((a, b) => b - a)
