@@ -3,9 +3,18 @@ import { getPuzzleInputWithoutEmptyLastLine } from '#root/util/index.js'
 const input = getPuzzleInputWithoutEmptyLastLine(import.meta)
 
 const head = { x: 0, y: 0 }
-const tail = { x: 0, y: 0 }
+const tail = {
+	x: 0,
+	y: 0,
+	history: [],
+	move({ x, y }) {
+		this.history.push({ x: this.x, y: this.y })
+		this.x = x || this.x
+		this.y = y || this.y
+	}
+}
 
-const move = (headOrTail, direction, steps) => {
+const move = (direction, steps) => {
 	while (steps > 0) {
 		switch (direction) {
 			case 'U':
@@ -31,16 +40,23 @@ const move = (headOrTail, direction, steps) => {
 		 */
 		const distance = getDistanceBetween(head, tail)
 
-		if (distance.x === 2) {
-			tail.x = tail.x + distance.x - 1
+		console.log(distance)
+
+		if ([2, -2].includes(distance.x)) {
+			if (distance.y === 0) {
+				tail.move({ x: tail.x + distance.x / 2 })
+			} else {
+				tail.move({ x: tail.x + distance.x / 2, y: tail.y + distance.y })
+			}
 		}
 
-		if (distance.x > 2 || distance.y > 2) {
-			// TODO: Move tail
+		if ([2, -2].includes(distance.y)) {
+			if (distance.x === 0) {
+				tail.move({ y: tail.y + distance.y / 2 })
+			} else {
+				tail.move({ y: tail.y + distance.y / 2, x: tail.x + distance.x })
+			}
 		}
-
-		console.log(head)
-		console.log(tail)
 
 		steps--
 	}
@@ -58,5 +74,31 @@ for (const line of input) {
 		return i === 0 ? value : Number(value)
 	})
 
-	move(head, direction, steps)
+	move(direction, steps)
 }
+
+const points = [...tail.history, { x: tail.x, y: tail.y }]
+
+const maxX = points.reduce((x, point) => (point.x > x ? point.x : x), 0)
+const minX = points.reduce((x, point) => (point.x < x ? point.x : x), 0)
+const maxY = points.reduce((y, point) => (point.y > y ? point.y : y), 0)
+const minY = points.reduce((y, point) => (point.y < y ? point.y : y), 0)
+
+for (let y = maxY; y >= minY; y--) {
+	let row = ''
+	for (let x = minX; x <= maxX + 1; x++) {
+		if (points.find(point => point.x === x && point.y === y)) {
+			row += `#`
+		} else {
+			row += '.'
+		}
+	}
+
+	console.log(row)
+}
+
+points.map(point => `${point.x},${point.y}`).forEach(point => console.log(point))
+
+const distinct = new Set(points.map(point => `${point.x},${point.y}`))
+
+console.log(distinct.size)
