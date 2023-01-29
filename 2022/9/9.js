@@ -77,44 +77,55 @@ for (const line of input) {
 	move(direction, steps)
 }
 
-function paint() {
-	const points = [...tail.history, { x: tail.x, y: tail.y }]
-
-	const maxX = points.reduce((x, point) => (point.x > x ? point.x : x), 0)
-	const minX = points.reduce((x, point) => (point.x < x ? point.x : x), 0)
-	const maxY = points.reduce((y, point) => (point.y > y ? point.y : y), 0)
-	const minY = points.reduce((y, point) => (point.y < y ? point.y : y), 0)
-
-	// for (let y = maxY; y >= minY; y--) {
-	// 	let row = ''
-	// 	for (let x = minX; x <= maxX; x++) {
-	// 		if (head.x === x && head.y === y) {
-	// 			row += 'H'
-	// 			continue
-	// 		}
-
-	// 		if (tail.x === x && tail.y === y) {
-	// 			row += 'T'
-	// 			continue
-	// 		}
-
-	// 		if (points.find(point => point.x === x && point.y === y)) {
-	// 			row += `#`
-	// 		} else {
-	// 			row += '.'
-	// 		}
-	// 	}
-
-	// 	console.log(row)
-	// }
-
-	points.map(point => `${point.x},${point.y}`)
-
-	const distinct = new Set(points.map(point => `${point.x},${point.y}`))
-
-	assert(distinct.size === 5513, `The solution must be 5513 but was ${distinct.size}`)
-
-	console.log('OK')
+const getVisitedPoints = tail => {
+	return [...tail.history, { x: tail.x, y: tail.y }]
 }
 
-paint()
+function paint(points) {
+	const { min, max } = points.reduce(
+		({ min, max }, point) => {
+			min.x = point.x < min.x ? point.x : min.x
+			max.x = point.x > max.x ? point.x : max.x
+			min.y = point.y < min.y ? point.y : min.y
+			max.y = point.y > max.y ? point.y : max.y
+
+			return { min, max }
+		},
+		{
+			min: { x: Infinity, y: Infinity },
+			max: { x: -Infinity, y: -Infinity }
+		}
+	)
+
+	let grid = ''
+
+	for (let y = max.x; y >= min.y; y--) {
+		for (let x = min.x; x <= max.x; x++) {
+			if (head.x === x && head.y === y) {
+				grid += 'H'
+			} else if (tail.x === x && tail.y === y) {
+				grid += 'T'
+			} else if (points.find(point => point.x === x && point.y === y)) {
+				grid += `#`
+			} else {
+				grid += '.'
+			}
+		}
+
+		grid += '\n'
+	}
+
+	console.log(grid)
+}
+
+const points = getVisitedPoints(tail)
+
+// paint(points)
+
+const distinct = new Set(points.map(point => `${point.x},${point.y}`))
+
+console.log(distinct.size)
+
+assert(distinct.size === 5513, `The solution must be 5513 but was ${distinct.size}`)
+
+console.log('OK')
