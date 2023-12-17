@@ -48,5 +48,46 @@ func (solver Solver) SolveFirst() string {
 }
 
 func (solver Solver) SolveSecond() string {
-	return "N/A"
+	lines, _ := solver.GetPuzzleInput()
+	won := make([]int, 0)
+	solution := 0
+
+	for i, line := range lines {
+		matches := regexp.MustCompile(`Card\s+(\d+):((?: \s*\d+)+) \|((?: \s*\d+)+)`).FindAllStringSubmatch(line, -1)
+		winningNumbers := make(sets.Set[int])
+		numbers := make(sets.Set[int])
+
+		card, _ := strconv.Atoi(matches[0][1])
+
+		for _, num := range regexp.MustCompile(`\d+`).FindAllString(matches[0][2], -1) {
+			if num, err := strconv.Atoi(num); err == nil {
+				winningNumbers.Insert(num)
+			}
+		}
+
+		for _, num := range regexp.MustCompile(`\d+`).FindAllString(matches[0][3], -1) {
+			if num, err := strconv.Atoi(num); err == nil {
+				numbers.Insert(num)
+			}
+		}
+
+		myWinningNumbers := winningNumbers.Intersection(numbers)
+		sumOfOriginalAndClones := 0
+
+		for _, won := range won {
+			if won == card {
+				sumOfOriginalAndClones++
+			}
+		}
+
+		for j := i + 1; j <= i+myWinningNumbers.Len(); j++ {
+			for k := sumOfOriginalAndClones; k >= 0; k-- {
+				won = append(won, j+1)
+			}
+		}
+	}
+
+	solution = len(won) + len(lines)
+
+	return strconv.Itoa(solution)
 }
