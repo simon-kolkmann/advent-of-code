@@ -8,14 +8,14 @@ import (
 	"simon-lorenz.dev/advent-of-code/2023/utils"
 )
 
-type Solver struct{}
-
-func (Solver) GetPuzzleNumber() int {
-	return 2
+type Solver struct {
+	utils.BaseSolver
 }
 
-func (solver Solver) GetPuzzleInput() ([]string, error) {
-	return utils.GetPuzzleInput(solver.GetPuzzleNumber())
+func NewSolver() Solver {
+	return Solver{
+		utils.NewBaseSolver(2),
+	}
 }
 
 func (solver Solver) SolveFirst() string {

@@ -6,8 +6,22 @@ import (
 	"strconv"
 )
 
-func GetPuzzleInput(puzzleNumber int) ([]string, error) {
-	path := "tasks/" + strconv.Itoa(puzzleNumber) + "/input.txt"
+type BaseSolver struct {
+	puzzle int
+}
+
+func NewBaseSolver(puzzle int) BaseSolver {
+	return BaseSolver{
+		puzzle,
+	}
+}
+
+func (solver BaseSolver) GetPuzzleNumber() int {
+	return solver.puzzle
+}
+
+func (solver BaseSolver) GetPuzzleInput() ([]string, error) {
+	path := "tasks/" + strconv.Itoa(solver.GetPuzzleNumber()) + "/input.txt"
 
 	file, err := os.Open(path)
 

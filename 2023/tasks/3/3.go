@@ -8,7 +8,15 @@ import (
 	"simon-lorenz.dev/advent-of-code/2023/utils"
 )
 
-type Solver struct{}
+type Solver struct {
+	utils.BaseSolver
+}
+
+func NewSolver() Solver {
+	return Solver{
+		utils.NewBaseSolver(3),
+	}
+}
 
 type Neighbor struct {
 	value    byte
@@ -63,14 +71,6 @@ const (
 	npLower      = iota
 	npLowerRight = iota
 )
-
-func (Solver) GetPuzzleNumber() int {
-	return 3
-}
-
-func (solver Solver) GetPuzzleInput() ([]string, error) {
-	return utils.GetPuzzleInput(solver.GetPuzzleNumber())
-}
 
 func (solver Solver) SolveFirst() string {
 	lines, _ := solver.GetPuzzleInput()

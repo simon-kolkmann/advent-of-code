@@ -12,12 +12,12 @@ import (
 var solvers []ITaskSolver = make([]ITaskSolver, 0)
 
 func init() {
-	RegisterSolver(task_1.Solver{})
-	RegisterSolver(task_2.Solver{})
-	RegisterSolver(task_3.Solver{})
-	RegisterSolver(task_4.Solver{})
-	RegisterSolver(task_5.Solver{})
-	RegisterSolver(task_6.Solver{})
+	RegisterSolver(task_1.NewSolver())
+	RegisterSolver(task_2.NewSolver())
+	RegisterSolver(task_3.NewSolver())
+	RegisterSolver(task_4.NewSolver())
+	RegisterSolver(task_5.NewSolver())
+	RegisterSolver(task_6.NewSolver())
 }
 
 func RegisterSolver(solver ITaskSolver) {
