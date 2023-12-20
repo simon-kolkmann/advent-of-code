@@ -92,21 +92,6 @@ func (solver Solver) SolveFirst() string {
 }
 
 func (solver Solver) SolveSecond() string {
-	// lines, _ := solver.GetPuzzleInput()
-
-	// var seeds []int
-
-	// pairs := regexp.MustCompile(`\d+`).FindAllString(lines[0], -1)
-
-	// for i := 0; i < len(pairs); i = i + 2 {
-	// 	start, _ := strconv.Atoi(pairs[i])
-	// 	r, _ := strconv.Atoi(pairs[i+1])
-
-	// 	for i := start; i <= start+r; i++ {
-	// 		seeds = append(seeds, i)
-	// 	}
-	// }
-
 	return "N/A"
 }
 
