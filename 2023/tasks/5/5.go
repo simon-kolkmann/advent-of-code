@@ -91,10 +91,6 @@ func (solver Solver) SolveFirst() string {
 	return strconv.Itoa(Min(seeds))
 }
 
-func (solver Solver) SolveSecond() string {
-	return "N/A"
-}
-
 func Min(values []int) int {
 	var min int
 

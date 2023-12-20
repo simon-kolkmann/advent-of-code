@@ -42,3 +42,11 @@ func (solver BaseSolver) GetPuzzleInput() ([]string, error) {
 
 	return lines, scanner.Err()
 }
+
+func (solver BaseSolver) SolveFirst() string {
+	return "N/A"
+}
+
+func (solver BaseSolver) SolveSecond() string {
+	return "N/A"
+}
