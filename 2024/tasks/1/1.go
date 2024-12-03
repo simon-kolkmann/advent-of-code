@@ -45,5 +45,26 @@ func (solver Solver) SolveFirst() string {
 }
 
 func (solver Solver) SolveSecond() string {
-	return ""
+	lines, _ := solver.GetPuzzleInput()
+
+	numbers := make([]int, 0)
+	counters := make(map[int]int)
+
+	for _, line := range lines {
+		nums := strings.Split(line, "   ")
+
+		a := utils.UnsafeAtoi(nums[0])
+		b := utils.UnsafeAtoi(nums[1])
+
+		numbers = append(numbers, a)
+		counters[b]++
+	}
+
+	score := 0
+
+	for _, number := range numbers {
+		score += number * counters[number]
+	}
+
+	return strconv.Itoa(score)
 }
