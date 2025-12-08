@@ -72,11 +72,11 @@ func (solver Solver) SolveSecond() string {
 }
 
 func SplitStringIntoSequences(str string, size int) []string {
-	sequences := make([]string, 0)
-
 	if size == 0 || len(str)%size != 0 {
 		return nil
 	}
+
+	sequences := make([]string, 0)
 
 	for i := 0; i < len(str); i += size {
 		sequences = append(sequences, str[i:i+size])
