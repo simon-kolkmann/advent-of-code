@@ -72,16 +72,17 @@ func (solver Solver) SolveSecond() string {
 }
 
 func SplitStringIntoSequences(str string, size int) []string {
-	segments := make([]string, 0)
+	sequences := make([]string, 0)
 
 	if size == 0 || len(str)%size != 0 {
 		return nil
 	}
 
 	for i := 0; i < len(str); i += size {
-		segments = append(segments, str[i:i+size])
+		sequences = append(sequences, str[i:i+size])
 	}
-	return segments
+
+	return sequences
 }
 
 func SequencesAreEqual(sequences []string) bool {
