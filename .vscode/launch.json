@@ -1,0 +1,25 @@
+{
+  // Use IntelliSense to learn about possible attributes.
+  // Hover to view descriptions of existing attributes.
+  // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "2025",
+      "type": "go",
+      "request": "launch",
+      "console": "integratedTerminal",
+      "mode": "auto",
+      "program": "${workspaceFolder}/2025",
+      "output": "${workspaceFolder}/.vscode/debug.bin",
+      "args": ["-puzzle", "${input:puzzle}"]
+    }
+  ],
+  "inputs": [
+    {
+      "id": "puzzle",
+      "type": "promptString",
+      "description": "puzzle"
+    }
+  ]
+}
